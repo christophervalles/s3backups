@@ -33,11 +33,18 @@ trap onexit 1 2 3 15 ERR
 #  @param $1 integer  (optional) Exit status.  If not set, use `$?'
 
 function onexit() {
-    #Send an email with the issue
+    #Send an email with the issue (using mail)
     echo -e "Something went wrong while doing a backup, below you'll find the log.\n" > $email_message
     echo -e "=====================================================================\n" >> $email_message
     cat $backup_log >> $email_message
     /usr/bin/mail -a "From: $email_from" -s "$email_subject" "$email_recipient" < $email_message
+
+    ## Send an email with the issue (using sendmail)
+    # echo -e "Subject:$email_subject\nFrom:$email_from\n" > $email_message
+    # echo -e "Something went wrong while doing a backup, below you'll find the log.\n" >> $email_message
+    # echo -e "=====================================================================\n" >> $email_message
+    # cat $backup_log >> $email_message
+    # /usr/sbin/sendmail -t $email_recipient < $email_message
 
     rm -Rf /backups/data/db/*
     rm -Rf /backups/data/www/*
