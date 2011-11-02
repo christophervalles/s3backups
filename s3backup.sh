@@ -109,4 +109,4 @@ rm -Rf /backups/compressed/*
 echo `date '+%F %T'`: Clean completed
 echo `date '+%F %T'`: Backup completed
 
-onexit
+exit 0
